@@ -28,9 +28,11 @@ class sequenplayer(playerstrategy):
 
 class randomplayer(playerstrategy):
     def play(self,songs:list[song]):
-        suffled_songs = songs[:]
+        suffled_songs = songs[:] #Copy of songs list
         random.shuffle(suffled_songs)
         return suffled_songs
+
+
 class outputdevice(ABC):
     @abstractmethod
     def play(self,song:song):
@@ -44,6 +46,10 @@ class bluetoothoutput(outputdevice):
 class speakeroutput(outputdevice):
     def play(self,song:song):
         print(f"playing {song.name} by {song.artist} on speaker")
+
+class headphone(outputdevice):
+    def play(self,song:song):
+        print(f"playing {song.name} by {song.artist}")
 
 class Player:
     def __init__(self, device: outputdevice):
