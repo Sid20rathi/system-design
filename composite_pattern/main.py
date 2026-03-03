@@ -19,12 +19,14 @@ class Folder(filesystem):
     def __init__(self,name):
         self.name = name
         self.children=[]
+        self.size= 0
 
     def add(self,component):
-        self.children.append(component)\
+        self.children.append(component)
+        self.size +=1
     
     def show(self,indent=0):
-        print(" "*indent+f"folder: {self.name}")
+        print(" "*indent+f"folder: {self.name} of size {self.size}")
         for child in self.children:
             child.show(indent+4)
 
