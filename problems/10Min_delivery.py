@@ -169,3 +169,24 @@ class OrderService:
                 raise Exception("Out of stock")
 
         return allocation
+
+
+class DeliveryAgent:
+    def __init__(self, agent_id, store_id):
+        self.agent_id = agent_id
+        self.store_id = store_id
+
+
+class Zepto:
+
+    def __init__(self):
+        self.inventory_store = Dbstore()
+        self.inventory_manager = InventoryStore(self.inventory_store)
+        self.dark_store_manager = DarkStoreManager.get_instance()
+        self.order_service = OrderService(
+            self.inventory_manager,
+            self.dark_store_manager
+        )
+
+    def place_order(self, cart, lat, lon):
+        return self.order_service.place_order(cart, lat, lon)
