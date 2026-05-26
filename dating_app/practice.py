@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
+from collections import UserList
 
 
 class User():
     def __init__(self,id,name,age,interests,location):
-        self.user_id =id
+        self.id =id
         self.name= name
         self.age = age
         self.interests = interests
@@ -13,13 +14,13 @@ class User():
         self.matches = set()
 
     def swipe_right(self,other_user):
-        self.likes.add(other_user.user_id)
+        self.likes.add(other_user.id)
 
     def swipe_left(self,other_user):
         print(f"{self.name} skipped {other_user.name}")
     
     def add_match(self,other_user):
-        self.matches.add(other_user.user_id)
+        self.matches.add(other_user.id)
 
 
 
@@ -53,5 +54,36 @@ class notification:
 
     
 
+class matching_strategy(ABC):
+    @abstractmethod
+    def match(self,user, users):
+        pass
+
+class normal_matching(matching_strategy):
+    def match(self,user,users):
+        for u in users:
+             return [u for u in users if users.id != user.id]
+
+class location_matching(matching_strategy):
+    def match(self,user,users):
+        for u in users:
+             return [u for u in users if users.location == user.location and users.id != user.id]
+
+class interest_matching(matching_strategy):
     
+    def match(self,user,users):
+        result =[]
+
+        for others in users:
+            if other.id == user.id:
+                continue
+            common = set(user.interests) & set(other.interests)
+
+            if len(common)>=2:
+                result.append(other)
+        
+        return result
+
+
+        
         
